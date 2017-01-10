@@ -5,11 +5,11 @@
 using namespace std;
 using json = nlohmann::json;
 
-json openfile(char * loc){
+json openJSON(){
     json j;
     ifstream i;
     while (!i.is_open()){
-        i.open(loc, ios::in);
+        i.open("C:/Users/caelanv/Documents/FaultDetection/FaultDetection/sample.json", ios::in);
     }
     i >> j;
     i.close();
