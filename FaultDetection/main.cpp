@@ -1,15 +1,17 @@
-#include <iostream>
-#include <fstream>
 #include "json.hpp"
-#include "datacollect.h"
+
+#include "datacollect.hpp"
+#include "doorswitchanalysis.hpp"
+#include "poweranalysis.hpp"
+#include "temperatureanalysis.hpp"
 
 using namespace std;
 using json = nlohmann::json;
 
 int main(){
-    json j;
-    char loc[80] = "C:/Users/caelanv/Documents/FaultDetection/FaultDetection/sample.json";
+    json data;
 
-    j = openfile(loc);
+    data = openJSON();
+    cout << data.dump(4) << endl;
     return 0;
 }

@@ -1,0 +1,4 @@
+#ifndef POWERANALYSIS_H
+#define POWERANALYSIS_H
+
+#endif // POWERANALYSIS_H
