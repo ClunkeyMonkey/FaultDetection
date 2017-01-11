@@ -2,6 +2,7 @@
 
 #include "datacollect.hpp"
 #include "doorswitchanalysis.hpp"
+#include "dutyanalysis.hpp"
 #include "poweranalysis.hpp"
 #include "temperatureanalysis.hpp"
 

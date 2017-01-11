@@ -7,7 +7,8 @@ SOURCES += main.cpp \
     datacollect.cpp \
     temperatureanalysis.cpp \
     doorswitchanalysis.cpp \
-    poweranalysis.cpp
+    poweranalysis.cpp \
+    dutyanalysis.cpp
 
 DISTFILES += \
     sample.json
@@ -17,4 +18,5 @@ HEADERS += \
     doorswitchanalysis.hpp \
     datacollect.hpp \
     poweranalysis.hpp \
-    temperatureanalysis.hpp
+    temperatureanalysis.hpp \
+    dutyanalysis.hpp

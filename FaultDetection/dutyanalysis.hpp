@@ -1,0 +1,4 @@
+#ifndef DUTYANALYSIS_H
+#define DUTYANALYSIS_H
+
+#endif // DUTYANALYSIS_H
