@@ -5,6 +5,8 @@
 using namespace std;
 using json = nlohmann::json;
 
-json openJSON();
+json* openJSON();
+void readJSON(json* j);
+void closeJSON(json* j);
 
 #endif // DATACOLLECT_H
