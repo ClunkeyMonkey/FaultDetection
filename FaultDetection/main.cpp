@@ -11,7 +11,8 @@ using json = nlohmann::json;
 
 int main(){
     json* data = openJSON();
-    readJSON(data);
+    get_t1a(data);
+    //readJSON(data);
     closeJSON(data);
     return 0;
 }
