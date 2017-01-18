@@ -10,8 +10,8 @@ using namespace std;
 using json = nlohmann::json;
 
 int main(){
-    json* data = openJSON();
-    get_t1a(data);
+    json* raw = openJSON();
+    json* data = get_data(raw);
     //readJSON(data);
     closeJSON(data);
     return 0;
