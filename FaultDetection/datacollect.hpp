@@ -9,10 +9,11 @@ json* openJSON();
 void readJSON(json* j);
 void closeJSON(json* j);
 
-int getLastBlock(json* j);
+int getLastBlock(json* j, int days);
+int getLastDay(json* j);
 
-float* get_t1m(json* j, int l, int val);
-int* get_t1a(json* j, int l, int val);
+int* get_t1m(json* j, int l, int val);
+float* get_t1a(json* j, int l, int val);
 int* get_t1x(json* j, int l, int val);
 int* get_lt(json* j, int l, int val);
 int* get_pa(json* j, int l, int val);
