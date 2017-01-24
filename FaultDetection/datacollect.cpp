@@ -23,22 +23,22 @@ void closeJSON(json* j){
     delete j;
 }
 
-int getLastDay(json* j){
-    int i = 0;  //will result in index of the last block, once loop finished
-    json::iterator it = j[0]["result"]["results"].end();
-    it--;
-    json temp = *it;
-    while(temp != j[0]["result"]["results"][i]){
-        i++;
-    }
-    return i;
-}
 int getLastBlock(json* j, int day){
     int i = 0;  //will result in index of the last block, once loop finished
     json::iterator it = j[0]["result"]["results"][day]["subDayStat"]["stats"].end();
     it--;
     json temp = *it;
     while(temp != j[0]["result"]["results"][day]["subDayStat"]["stats"][i]){
+        i++;
+    }
+    return i;
+}
+int getLastDay(json* j){
+    int i = 0;  //will result in index of the last block, once loop finished
+    json::iterator it = j[0]["result"]["results"].end();
+    it--;
+    json temp = *it;
+    while(temp != j[0]["result"]["results"][i]){
         i++;
     }
     return i;
@@ -349,7 +349,6 @@ json* get_data(json* j){
     float* t1a = NULL;
     int* data = NULL;
 
-    ifstream in;
     ofstream out;
     while (!out.is_open()){
         out.open("C:/test.json", ios::out);
@@ -486,7 +485,6 @@ json* get_data(json* j){
         } else if (n == 1){
             out << "\n\t\t],\n\t\t\"lt\":[\n\t\t\t";
         }
-        for (k = 0; k <= dayI; k++){
             l = getLastEvent(j, k);
             val = findEventCount(j, l, k);
             if (n == 0){
@@ -496,7 +494,7 @@ json* get_data(json* j){
             }
             out << data[0];
             count++;
-            for (i = 1; i < val; i++){
+            for (i = 1; i < powVal; i++){
                 out << ",\n\t\t\t" << data[i];
                 count++;
             }
@@ -510,10 +508,11 @@ json* get_data(json* j){
 
     out.close();
 
+    /*ifstream in;
     while (!in.is_open()){
         in.open("C:/test.json", ios::in);
     }
     in >> j[0];
-    in.close();
+    in.close();*/
     return j;
 }

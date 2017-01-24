@@ -9,8 +9,8 @@ json* openJSON();
 void readJSON(json* j);
 void closeJSON(json* j);
 
-int getLastDay(json* j);
 int getLastBlock(json* j, int day);
+int getLastDay(json* j);
 int getLastEvent(json* j, int day);
 
 float* get_t1a(json* j, int l, int val, int day = 0);
