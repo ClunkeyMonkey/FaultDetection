@@ -43,6 +43,16 @@ int getLastDay(json* j){
     }
     return i;
 }
+int getLastEvent(json* j, int day){
+    int i = 0;  //will result in index of the last block, once loop finished
+    json::iterator it = j[0]["result"]["results"][day]["subDayStat"]["events"].end();
+    it--;
+    json temp = *it;
+    while(temp != j[0]["result"]["results"][day]["subDayStat"]["events"][i]){
+        i++;
+    }
+    return i;
+}
 
 float* get_t1a(json* j, int l, int val, int day){
     int i = 1;                          //holds currently observed index
@@ -85,34 +95,6 @@ int* get_t1x(json* j, int l, int val, int day){
         }
     }
     return t1x;
-}
-int* get_lt(json* j, int l, int val, int day){
-    int i = 1;                          //holds currently observed index
-    int pos = 0;                        //holds index to be filled
-    int* lt = new int[val + 1];    //makes the required array
-    lt[val] = 0;
-
-    for(i = 1; i <= l; i++){
-        if (j[0]["result"]["results"][day]["subDayStat"]["stats"][i]["t1x"] != NULL){
-            lt[pos] = (j[0]["result"]["results"][day]["subDayStat"]["stats"][i]["lt"].get<long long>()/1000);
-            pos++;
-        }
-    }
-    return lt;
-}
-int* get_rt(json* j, int l, int val, int day){
-    int i = 1;                          //holds currently observed index
-    int pos = 0;                        //holds index to be filled
-    int* rt = new int[val + 1];         //makes the required array
-    rt[val] = 0;
-
-    for(i = 1; i <= l; i++){
-        if (j[0]["result"]["results"][day]["subDayStat"]["stats"][i]["t1x"] != NULL){
-            rt[pos] = (j[0]["result"]["results"][day]["subDayStat"]["stats"][i]["rt"].get<int>());
-            pos++;
-        }
-    }
-    return rt;
 }
 int* get_pa(json* j, int l, int val, int day){
     int i = 1;                          //holds currently observed index
@@ -197,6 +179,34 @@ int* get_dos(json* j, int l, int val, int day){
         }
     }
     return dos;
+}
+int* get_lt(json* j, int l, int val, int day){
+    int i = 1;                          //holds currently observed index
+    int pos = 0;                        //holds index to be filled
+    int* lt = new int[val + 1];    //makes the required array
+    lt[val] = 0;
+
+    for(i = 1; i <= l; i++){
+        if (j[0]["result"]["results"][day]["subDayStat"]["stats"][i]["t1x"] != NULL){
+            lt[pos] = (j[0]["result"]["results"][day]["subDayStat"]["stats"][i]["lt"].get<long long>()/1000);
+            pos++;
+        }
+    }
+    return lt;
+}
+int* get_rt(json* j, int l, int val, int day){
+    int i = 1;                          //holds currently observed index
+    int pos = 0;                        //holds index to be filled
+    int* rt = new int[val + 1];         //makes the required array
+    rt[val] = 0;
+
+    for(i = 1; i <= l; i++){
+        if (j[0]["result"]["results"][day]["subDayStat"]["stats"][i]["t1x"] != NULL){
+            rt[pos] = (j[0]["result"]["results"][day]["subDayStat"]["stats"][i]["rt"].get<int>());
+            pos++;
+        }
+    }
+    return rt;
 }
 
 int* get_cmp(json* j, int l, int val, int day){
@@ -284,7 +294,46 @@ int* get_rtPow(json* j, int l, int val, int day){
     return rt;
 }
 
+int findEventCount(json* j, int l, int day){
+    int i = 0;
+    int count = 0;
 
+    while (i < l){
+        if (j[0]["result"]["results"][day]["subDayStat"]["events"][i]["di"] == NULL){
+            count++;
+        }
+        i++;
+    }
+    return count;
+}
+int* get_et(json* j, int l, int val, int day){
+    int i = 0;
+    int pos = 0;
+    int* et = new int[val];
+    et[val - 1] = 0;
+
+    for(i = 0; i <= l; i++){
+        if (j[0]["result"]["results"][day]["subDayStat"]["events"][i]["di"] == NULL){
+            et[pos] = (j[0]["result"]["results"][day]["subDayStat"]["events"][i]["et"].get<int>());
+            pos++;
+        }
+    }
+    return et;
+}
+int* get_ltEvent(json* j, int l, int val, int day){
+    int i = 0;
+    int pos = 0;
+    int* lt = new int[val];
+    lt[val - 1] = 0;
+
+    for(i = 0; i <= l; i++){
+        if (j[0]["result"]["results"][day]["subDayStat"]["events"][i]["di"] == NULL){
+            lt[pos] = (j[0]["result"]["results"][day]["subDayStat"]["events"][i]["lt"].get<long long>()/1000);
+            pos++;
+        }
+    }
+    return lt;
+}
 
 json* get_data(json* j){
     int dayI = getLastDay(j);
@@ -305,7 +354,7 @@ json* get_data(json* j){
         out.open("C:/test.json", ios::out);
     }
 
-    out << "{\n\t\"log\":{\n\t\t\"t1a\": [\n\t\t\t";
+    out << "{\n\t\"logs\":{\n\t\t\"t1a\": [\n\t\t\t";
     for (k = 0; k <= dayI; k++){
         l = getLastBlock(j, k);
         powVal = floor((round((j[0]["result"]["results"][k]["subDayStat"]["stats"][l]["lt"].get<long long>() - j[0]["result"]["results"][k]["subDayStat"]["stats"][1]["lt"].get<long long>())/2160000.0) - 1) / 10.0);
@@ -386,7 +435,7 @@ json* get_data(json* j){
     for (n = 0; n <= 5; n++){
         count = 0;
         if (n == 0){
-            out << "\"pow\":{\n\t\t\"cmp\":[\n\t\t\t";
+            out << "\"power\":{\n\t\t\"cmp\":[\n\t\t\t";
         } else if (n == 1){
             out << "\n\t\t],\n\t\t\"cnp\":[\n\t\t\t";
         } else if (n == 2){
@@ -414,6 +463,34 @@ json* get_data(json* j){
                 data = get_ltPow(j, l, powVal, k);
             } else if (n == 5){
                 data = get_rtPow(j, l, powVal, k);
+            }
+            out << data[0];
+            count++;
+            for (i = 1; i < powVal; i++){
+                out << ",\n\t\t\t" << data[i];
+                count++;
+            }
+            if (k != dayI){
+                out << ",\n\t\t\t";
+            }
+            delete[] data;
+        }
+    }
+    out << "\n\t\t], \n\t\t\"len\":" << count << "\n\t},\n\t";
+
+    for (n = 0; n <= 1; n++){
+        count = 0;
+        if (n == 0){
+            out << "\"events\":{\n\t\t\"et\":[\n\t\t\t";
+        } else if (n == 1){
+            out << "\n\t\t],\n\t\t\"lt\":[\n\t\t\t";
+        }
+            l = getLastEvent(j, k);
+            val = findEventCount(j, l, k);
+            if (n == 0){
+                data = get_et(j, l, val, k);
+            } else if (n == 1){
+                data = get_ltEvent(j, l, val, k);
             }
             out << data[0];
             count++;
