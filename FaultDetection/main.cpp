@@ -11,8 +11,10 @@ using json = nlohmann::json;
 
 int main(){
     json* raw = openJSON();
-    json* data = get_data(raw);
-    //readJSON(data);
-    closeJSON(data);
+    get_data(raw);
+
+    get_Dt(raw);
+
+    closeJSON(raw);
     return 0;
 }

@@ -485,6 +485,7 @@ json* get_data(json* j){
         } else if (n == 1){
             out << "\n\t\t],\n\t\t\"lt\":[\n\t\t\t";
         }
+        for (k = 0; k <= dayI; k++){
             l = getLastEvent(j, k);
             val = findEventCount(j, l, k);
             if (n == 0){
@@ -494,7 +495,7 @@ json* get_data(json* j){
             }
             out << data[0];
             count++;
-            for (i = 1; i < powVal; i++){
+            for (i = 1; i < val; i++){
                 out << ",\n\t\t\t" << data[i];
                 count++;
             }
@@ -508,11 +509,11 @@ json* get_data(json* j){
 
     out.close();
 
-    /*ifstream in;
+    ifstream in;
     while (!in.is_open()){
         in.open("C:/test.json", ios::in);
     }
     in >> j[0];
-    in.close();*/
+    in.close();
     return j;
 }
