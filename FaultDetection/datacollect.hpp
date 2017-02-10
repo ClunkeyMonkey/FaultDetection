@@ -37,5 +37,6 @@ int* get_et(json* j, int l, int val, int day);
 int* get_ltEvent(json* j, int l, int val, int day);
 
 json* get_data(json* j);
+void get_csv(json* j);
 
 #endif // DATACOLLECT_H

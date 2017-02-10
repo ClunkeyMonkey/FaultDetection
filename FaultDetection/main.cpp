@@ -12,9 +12,7 @@ using json = nlohmann::json;
 int main(){
     json* raw = openJSON();
     get_data(raw);
-
     get_Dt(raw);
-
     closeJSON(raw);
     return 0;
 }
